@@ -1,0 +1,6 @@
+[submodule "MentOS"]
+	path = MentOS
+	url = https://github.com/fischerling/MentOS
+[submodule "qemu"]
+	path = qemu
+	url = https://gitlab.com/qemu-project/qemu.git
