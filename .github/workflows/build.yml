@@ -1,0 +1,227 @@
+name: Build SOS
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-mentos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the sources
+        uses: actions/checkout@v4
+
+      - name: Cache build dir
+        id: mentos-cached-build
+        uses: actions/cache@v4
+        with:
+          path: MentOS/build
+          key: 93753f7-mentos-cached-build
+
+      - name: Checkout MentOS submodule
+        if: steps.mentos-cached-build.outputs.cache-hit != 'true'
+        run: git submodule update --init MentOS
+
+      - name: Install dependencies
+        if: steps.mentos-cached-build.outputs.cache-hit != 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nasm fuse2fs
+
+      - name: Build
+        if: steps.mentos-cached-build.outputs.cache-hit != 'true'
+        run: |
+          cd MentOS
+          cmake -B build -DKEYMAP_TYPE=KEYMAP_DE
+          cmake --build build --parallel 2 --target filesystem_permissions
+
+      - name: Upload MentOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MentOS
+          path: MentOS/build
+
+
+  build-qemu:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+      - name: Checkout the sources
+        uses: actions/checkout@v4
+
+      - name: Setup mingw build environment
+        uses: msys2/setup-msys2@v2
+        with:
+          update: true
+          install: >-
+            base-devel
+            mingw-w64-x86_64-toolchain
+            git
+            python
+            ninja
+            mingw-w64-x86_64-glib2
+            mingw-w64-x86_64-pixman
+            python-setuptools
+            mingw-w64-x86_64-gtk3
+
+      - name: Cache build dir
+        id: qemu-cached-build
+        uses: actions/cache@v4
+        with:
+          path: qemu/build
+          key: v8.2.1-qemu-cached-build
+
+      - name: Checkout MentOS submodule
+        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
+        run: git submodule update --init qemu
+
+      - run: mkdir qemu/build
+        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
+
+      - name: Configure QEMU build
+        run: >
+          cd qemu/build;
+          ../configure
+          --target-list=i386-softmmu
+          --disable-werror
+          --disable-stack-protector
+          --disable-qom-cast-debug
+          --enable-gtk
+          --disable-sdl
+          --disable-dsound
+          --disable-dbus-display
+          --disable-guest-agent
+          --disable-vnc
+          --disable-tools
+          --disable-bochs
+        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
+
+      - name: Build QEMU
+        run: cd qemu/build; make
+        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
+
+      - name: Delete built tests
+        run: rm -r qemu/build/tests
+        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
+
+      - name: Copy BIOS file
+        run: cp qemu/pc-bios/bios-256k.bin qemu/build/pc-bios/bios-256k.bin
+        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
+
+      - name: Copy required DLLs into the build directory
+        run: >
+          cp /mingw64/bin/libbz2-1.dll
+          /mingw64/bin/liblzo2-2.dll
+          /mingw64/bin/libcairo-2.dll
+          /mingw64/bin/libcairo-gobject-2.dll
+          /mingw64/bin/libwinpthread-1.dll
+          /mingw64/bin/libepoxy-0.dll
+          /mingw64/bin/libgdk-3-0.dll
+          /mingw64/bin/libgdk_pixbuf-2.0-0.dll
+          /mingw64/bin/libgio-2.0-0.dll
+          /mingw64/bin/libglib-2.0-0.dll
+          /mingw64/bin/libgmodule-2.0-0.dll
+          /mingw64/bin/libgobject-2.0-0.dll
+          /mingw64/bin/libgtk-3-0.dll
+          /mingw64/bin/libiconv-2.dll
+          /mingw64/bin/libintl-8.dll
+          /mingw64/bin/libncursesw6.dll
+          /mingw64/bin/libpixman-1-0.dll
+          /mingw64/bin/libpng16-16.dll
+          /mingw64/bin/zlib1.dll
+          /mingw64/bin/libzstd.dll
+          /mingw64/bin/libgcc_s_seh-1.dll
+          /mingw64/bin/libstdc++-6.dll
+          /mingw64/bin/libfontconfig-1.dll
+          /mingw64/bin/libfreetype-6.dll
+          /mingw64/bin/libfribidi-0.dll
+          /mingw64/bin/libpango-1.0-0.dll
+          /mingw64/bin/libpangocairo-1.0-0.dll
+          /mingw64/bin/libpangowin32-1.0-0.dll
+          /mingw64/bin/libpangoft2-1.0-0.dll
+          /mingw64/bin/libffi-8.dll
+          /mingw64/bin/libpcre2-8-0.dll
+          /mingw64/bin/libharfbuzz-0.dll
+          /mingw64/bin/libatk-1.0-0.dll
+          /mingw64/bin/libexpat-1.dll
+          /mingw64/bin/libbrotlidec.dll
+          /mingw64/bin/libbrotlicommon.dll
+          /mingw64/bin/libthai-0.dll
+          /mingw64/bin/libgraphite2.dll
+          /mingw64/bin/libdatrie-1.dll
+          qemu/build
+
+      - name: Upload qemu artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: qemu
+          path: |
+            qemu/build
+            run.bat
+
+
+  build-course:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the sources
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install texlive-latex-extra texlive-lang-german
+
+      - name: Install pandoc
+        run: |
+          wget https://github.com/jgm/pandoc/releases/download/3.1.11.1/pandoc-3.1.11.1-linux-amd64.tar.gz
+          tar xf pandoc*.tar.gz
+          sudo cp pandoc*/bin/pandoc /usr/bin
+
+      - name: Install pandoc-plot
+        run: |
+          wget https://github.com/LaurentRDC/pandoc-plot/releases/download/1.7.0/pandoc-plot-Linux-x86_64-static.zip
+          unzip pandoc-plot*.zip
+          chmod a+rx pandoc-plot
+          sudo cp pandoc-plot /usr/bin
+
+      - name: Build course material
+        run: |
+          make -C course
+
+      - name: Upload course artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: course
+          path: course/build
+
+
+  publish:
+    runs-on: ubuntu-latest
+    needs:
+      - build-mentos
+      - build-qemu
+      - build-course
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Extract run.bat from qemu artifact
+        run: mv qemu/run.bat .
+
+      - name: Zip the windows release
+        run: zip -r sos-win.zip run.bat qemu mentos cource
+
+      - name: Release artifacts
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: sos-win.zip
