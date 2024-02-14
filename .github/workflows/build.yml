@@ -217,8 +217,13 @@ jobs:
       - name: Extract run.bat from qemu artifact
         run: mv qemu/run.bat .
 
+      - name: Strip build path from qemu artifact
+        run: |
+          cp -r qemu/qemu/build/. qemu
+          rm -r qemu/qemu/build
+
       - name: Zip the windows release
-        run: zip -r sos-win.zip run.bat qemu mentos cource
+        run: zip -r sos-win.zip run.bat qemu MentOS course
 
       - name: Release artifacts
         if: startsWith(github.ref, 'refs/tags/')
