@@ -54,7 +54,15 @@ jobs:
       - name: Checkout the sources
         uses: actions/checkout@v4
 
+      - name: Cache build dir
+        id: qemu-cached-build
+        uses: actions/cache@v4
+        with:
+          path: qemu/build
+          key: v8.2.1-1-qemu-cached-build
+
       - name: Setup mingw build environment
+        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
         uses: msys2/setup-msys2@v2
         with:
           update: true
@@ -68,13 +76,6 @@ jobs:
             mingw-w64-x86_64-pixman
             python-setuptools
             mingw-w64-x86_64-gtk3
-
-      - name: Cache build dir
-        id: qemu-cached-build
-        uses: actions/cache@v4
-        with:
-          path: qemu/build
-          key: v8.2.1-qemu-cached-build
 
       - name: Checkout MentOS submodule
         if: steps.qemu-cached-build.outputs.cache-hit != 'true'
@@ -114,6 +115,7 @@ jobs:
         if: steps.qemu-cached-build.outputs.cache-hit != 'true'
 
       - name: Copy required DLLs into the build directory
+        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
         run: >
           cp /mingw64/bin/libbz2-1.dll
           /mingw64/bin/liblzo2-2.dll
