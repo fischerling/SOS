@@ -1,2 +1,3 @@
-# v0.0.2
-* Fix github action
+# v0.0.4
+* Build the bootloader
+* Fix the qemu command in run.bat
