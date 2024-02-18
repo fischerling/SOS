@@ -18,7 +18,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: MentOS/build
-          key: b6fcd6f-mentos-cached-build
+          key: b6fcd6f-1-mentos-cached-build
 
       - name: Checkout MentOS submodule
         if: steps.mentos-cached-build.outputs.cache-hit != 'true'
@@ -35,7 +35,7 @@ jobs:
         run: |
           cd MentOS
           cmake -B build -DKEYMAP_TYPE=KEYMAP_DE
-          cmake --build build --parallel 2 --target filesystem_permissions
+          cmake --build build --parallel 2 --target filesystem_permissions bootloader.bin
 
       - name: Upload MentOS artifact
         uses: actions/upload-artifact@v4
