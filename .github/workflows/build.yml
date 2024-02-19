@@ -59,7 +59,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: qemu/build
-          key: v8.2.1-1-qemu-cached-build
+          key: v8.2.1-3-qemu-cached-build
 
       - name: Setup mingw build environment
         if: steps.qemu-cached-build.outputs.cache-hit != 'true'
@@ -71,6 +71,7 @@ jobs:
             mingw-w64-x86_64-toolchain
             git
             python
+            meson
             ninja
             mingw-w64-x86_64-glib2
             mingw-w64-x86_64-pixman
@@ -81,37 +82,34 @@ jobs:
         if: steps.qemu-cached-build.outputs.cache-hit != 'true'
         run: git submodule update --init qemu
 
-      - run: mkdir qemu/build
+      - name: Create needed directories
         if: steps.qemu-cached-build.outputs.cache-hit != 'true'
+        run: >
+          mkdir qemu/build
+          mkdir qemu-install
 
       - name: Configure QEMU build
+        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
         run: >
           cd qemu/build;
           ../configure
+          --prefix=$GITHUB_WORKSPACE/qemu-install
           --target-list=i386-softmmu
           --disable-werror
           --disable-stack-protector
           --disable-qom-cast-debug
           --enable-gtk
           --disable-sdl
+          --disable-kvm
           --disable-dsound
           --disable-dbus-display
           --disable-guest-agent
           --disable-vnc
           --disable-tools
           --disable-bochs
-        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
 
       - name: Build QEMU
-        run: cd qemu/build; make
-        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
-
-      - name: Delete built tests
-        run: rm -r qemu/build/tests
-        if: steps.qemu-cached-build.outputs.cache-hit != 'true'
-
-      - name: Copy BIOS file
-        run: cp qemu/pc-bios/bios-256k.bin qemu/build/pc-bios/bios-256k.bin
+        run: cd qemu/build; make -j 2 all install
         if: steps.qemu-cached-build.outputs.cache-hit != 'true'
 
       - name: Copy required DLLs into the build directory
@@ -156,14 +154,14 @@ jobs:
           /mingw64/bin/libthai-0.dll
           /mingw64/bin/libgraphite2.dll
           /mingw64/bin/libdatrie-1.dll
-          qemu/build
+          qemu-install
 
       - name: Upload qemu artifact
         uses: actions/upload-artifact@v4
         with:
           name: qemu
           path: |
-            qemu/build
+            qemu-install
             run.bat
 
 
@@ -218,11 +216,6 @@ jobs:
 
       - name: Extract run.bat from qemu artifact
         run: mv qemu/run.bat .
-
-      - name: Strip build path from qemu artifact
-        run: |
-          cp -r qemu/qemu/build/. qemu
-          rm -r qemu/qemu/build
 
       - name: Zip the windows release
         run: zip -r sos-win.zip run.bat qemu MentOS course
