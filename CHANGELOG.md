@@ -1,2 +1,2 @@
-# v0.0.7
-* Bump MentOS to fix the file-permissions exercise
+# v0.0.8
+* Bump MentOS
