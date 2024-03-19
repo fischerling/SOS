@@ -1,2 +1,2 @@
-# v0.0.11
-* Fix setting the exercise permissions using POSIX sh
+# v0.0.12
+* Improe build artifact

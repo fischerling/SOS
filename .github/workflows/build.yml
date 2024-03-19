@@ -214,6 +214,9 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
 
+      - name: Strip qemu-install subdirectory
+        run: mv qemu/qemu-install/* qemu/
+
       - name: Extract run.bat from qemu artifact
         run: mv qemu/run.bat .
 
