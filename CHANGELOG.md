@@ -1,2 +1,2 @@
-# v0.0.10
-* Bump QEMU
+# v0.0.11
+* Fix setting the exercise permissions using POSIX sh
