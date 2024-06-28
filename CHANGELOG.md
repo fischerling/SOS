@@ -1,2 +1,3 @@
-# v0.1.2
-* Bump MentOS (fix build)
+# v0.1.3
+* Various improvements
+* Improve file-permission exercise
