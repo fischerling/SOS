@@ -174,7 +174,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install texlive-latex-extra texlive-lang-german
+          sudo apt install texlive-latex-extra texlive-lang-german texlive-bibtex-extra texlive-fonts-extra biber rubber
 
       - name: Install pandoc
         run: |
