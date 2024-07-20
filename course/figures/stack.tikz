@@ -1,0 +1,23 @@
+\begin{tikzpicture}[layer/.style={draw, minimum width=5cm, minimum height=1cm}]
+\node[layer, fill=gray] (h) {};
+\node[layer, above=0cm of h] (os) {Betriebssystem};
+\node[layer, above=0cm of os] (shell) {Nutzerschnittstelle};
+\node[layer, above=0cm of shell] (utils) {};
+
+\node[draw, circle, fill=gray!70, minimum size=0.5cm, above=0.25cm of shell, xshift=-1.2cm] (u1) {};
+\node[draw, circle, fill=gray!70, minimum size=0.5cm, above=0.25cm of shell] (u2) {};
+\node[draw, circle, fill=gray!70, minimum size=0.5cm, above=0.25cm of shell, xshift=1.2cm] (u3) {};
+
+\draw[Latex-] (u1) -- ($(u1) + (-1.8, 1)$) node[above, text width=1cm] {\small Webbrowser}; 
+\draw[Latex-] (u2) -- ($(u2) + (0, 1)$) node[above, align=center, text width=2cm] {\small E-Mail Programm};
+\draw[Latex-] (u3) -- ($(u3) + (0.75, 1)$) node[above, text width=1cm] {\small Mediaplayer}; 
+
+\draw[decoration={brace, raise=3pt}, decorate]
+  (h.north east) -- node[right, xshift=0.2cm] {Hardware} (h.south east);
+\draw[decoration={brace, raise=3pt}, decorate]
+  (utils.north east) -- node[right, xshift=0.2cm] {Software} (h.north east);
+\draw[decoration={brace, mirror, raise=3pt}, decorate]
+  (os.north west) -- node[left, xshift=-0.2cm] {kernel mode} (os.south west);
+\draw[decoration={brace, raise=3pt}, decorate]
+  (shell.south west) -- node[left, xshift=-0.2cm] {user mode} (utils.north west);
+\end{tikzpicture}

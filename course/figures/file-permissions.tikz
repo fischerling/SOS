@@ -1,0 +1,46 @@
+\begin{tikzpicture}
+
+\node (u) {\texttt{rwx}};
+\node[right=0pt of u] (g) {\texttt{rw-}};
+\node[right=0pt of g] (o) {\texttt{r-{}-}};
+
+\coordinate (repr) at (-0.8, 0);
+\node[anchor=east] at (repr |- u){symbolisch};
+
+\coordinate (brackets) at (0, 0.2);
+\coordinate (lbrackets) at (0, -0.2);
+\node[above = 1.5cm of u] (ul) {Owner};
+\draw (u.west) -- (u.west |- brackets) -- (u.east |- brackets) -- (u.east);
+\node[above = 1cm of g] (gl) {Group};
+\draw (g.west) -- (g.west |- brackets) -- (g.east |- brackets) -- (g.east);
+\node[above = 0.5cm of o] (ol) {Other};
+\draw (o.west) -- (o.west |- brackets) -- (o.east |- brackets) -- (o.east);
+
+\node[right = 1.5cm of g] (expl) {\texttt{rwx}};
+\draw[dashed] (expl.west) -- (expl.west |- lbrackets) -- (expl.east |- lbrackets) -- (expl.east);
+\draw[dashed] (expl.south) -- ($(expl.south) - (0, 0.15)$) -- ($(o.south) - (0, 0.15)$) -- (o.south);
+\draw[dashed] (o.west) -- (o.west |- lbrackets) -- (o.east |- lbrackets) -- (o.east);
+
+\node[anchor=west] (rexpl) at (expl.east |- ul) {\textbf{r}ead};
+\draw ($(expl.north) - (0.2, 0)$) |- (rexpl);
+\node[anchor=west] (wexpl) at (expl.east |- gl) {\textbf{w}rite};
+\draw (expl) |- (wexpl);
+\node[anchor=west] (xexpl) at (expl.east |- ol) {e\textbf{x}ecute};
+\draw ($(expl.north) + (0.2, 0)$) |- (xexpl);
+
+\node[above = of gl] {Berechtigungsklassen};
+
+\node[below =  0.2cm of u] (ub) {\texttt{111}};
+\node[below =  0.2cm of g] (gb) {\texttt{110}};
+\node[below =  0.2cm of o] (ob) {\texttt{100}};
+\node[anchor=east] at (repr |- ub){binär};
+
+\node[below =  0.2cm of ub] (uo) {\texttt{07}};
+\node[below =  0.2cm of gb] (go) {\texttt{06}};
+\node[below =  0.2cm of ob] (oo) {\texttt{04}};
+\node[anchor=east] at (repr |- uo){oktal};
+
+\draw (u) -- (ul);
+\draw (g) -- (gl);
+\draw (o) -- (ol);
+\end{tikzpicture}
