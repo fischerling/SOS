@@ -18,7 +18,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: MentOS/build
-          key: 00dd3d4-mentos-cached-build
+          key: 524bd2d-mentos-cached-build
 
       - name: Checkout MentOS submodule
         if: steps.mentos-cached-build.outputs.cache-hit != 'true'

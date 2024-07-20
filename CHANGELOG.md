@@ -1,3 +1,4 @@
-# v0.1.3
+# v0.1.4
 * Various improvements
-* Improve file-permission exercise
+* Fix directory entry creation
+* Move the creation of the example landscape into `exercises/file-permission/setup`
