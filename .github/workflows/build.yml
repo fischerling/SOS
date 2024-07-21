@@ -8,7 +8,10 @@ on:
 
 jobs:
   build-mentos:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    env:
+      CC: clang-18
+      CXX: clang++-18
     steps:
       - name: Checkout the sources
         uses: actions/checkout@v4
@@ -18,7 +21,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: MentOS/build
-          key: 524bd2d-mentos-cached-build
+          key: 524bd2d-3-mentos-cached-build
 
       - name: Checkout MentOS submodule
         if: steps.mentos-cached-build.outputs.cache-hit != 'true'
@@ -28,7 +31,7 @@ jobs:
         if: steps.mentos-cached-build.outputs.cache-hit != 'true'
         run: |
           sudo apt-get update
-          sudo apt-get install -y nasm fuse2fs
+          sudo apt-get install -y clang-18 nasm fuse2fs
 
       - name: Build
         if: steps.mentos-cached-build.outputs.cache-hit != 'true'

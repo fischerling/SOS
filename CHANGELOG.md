@@ -1,2 +1,2 @@
-# v0.2.1
-* Build Akronyme und Inhaltsverzeichnis beim ersten Mal
+# v0.2.2
+* CI: Build using clang-18
