@@ -1,2 +1,2 @@
-# v0.2.2
-* CI: Build using clang-18
+# v0.2.3
+* improve example landscape
