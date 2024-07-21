@@ -75,7 +75,8 @@ colframe=gray!75!black, enhanced, #1}
 
 \usepackage[school]{pgf-umlcd}
 
-% rubber: watch .build/arbeitsheft.acn
+% rubber: watch arbeitsheft.acn
+% rubber: watch arbeitsheft.acr
 \usepackage[acronym]{glossaries}
 \makeglossaries
 
@@ -521,5 +522,6 @@ Dem Autor sind drei Möglichkeiten bekannt, den Inhalt der Datei \inlinecode{top
 Der ersten Person die alle drei, oder potenziell noch weitere Möglichkeiten findet und diese unter \href{mailto://sos@muhq.space}{sos@muhq.space} erklärt, verspricht der Autor hiermit ein heiß Getränk ihrer Wahl.
 \end{aufgbox}
 
-\printglossaries
+\printnoidxglossary[type=acronym]
+\printacronyms
 \end{document}
