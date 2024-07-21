@@ -3,6 +3,8 @@
 SOS is meant to be a ready to use package to teach operating systems in
 German schools.
 
+A zip-archive including course material as well as the runnable operating system can be downloaded at [https://github.com/fischerling/SOS/releases](https://github.com/fischerling/SOS/releases).
+
 SOS is based on the great [MentOS](https://mentos-team.github.io/) educational
 operating system as well as [QEMU](https://www.qemu.org/) to provide a easy way
 to start SOS on any windows work station.
