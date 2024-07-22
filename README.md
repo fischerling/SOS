@@ -9,7 +9,15 @@ SOS is based on the great [MentOS](https://mentos-team.github.io/) educational
 operating system as well as [QEMU](https://www.qemu.org/) to provide a easy way
 to start SOS on any windows work station.
 
-# Licenses
+## Whishlist
+
+- [ ] Support booting from USB
+- [ ] Cover scheduling in SOS
+  - [ ] Implement passive waiting in MentOS
+    - [ ] Implement an idle thread
+  - [ ] Implement a scheduling visualization
+
+## Licenses
 
 * [MentOS](https://mentos-team.github.io/) is licensed under the terms of the [MIT license](https://github.com/mentos-team/MentOS/blob/1832c77fdb20e8a56f2acb7e5ba71dcdfb02bbe9/LICENSE.md).
 * [QEMU](https://wiki.qemu.org/License) is licensed under the terms of the [GNU General Public License, version 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
