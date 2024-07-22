@@ -8,13 +8,15 @@
 \usepackage[backend=biber,style=reading]{biblatex}
 \addbibresource{../literature.bib}
 
-\usepackage[margin=2cm]{geometry}
+\usepackage[margin=0cm]{geometry}
 
 \usepackage{wrapfig}
 \usepackage{caption}
 
 \usepackage[table]{xcolor}
 \usepackage{tabularx}
+
+\usepackage{afterpage}
 
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, linkcolor=blue, linktocpage}
@@ -85,46 +87,9 @@ colframe=gray!75!black, enhanced, #1}
 \newacronym{GID}{GID}{Gruppenkennung}
 \newacronym{PID}{PID}{Prozessnummer}
 \newacronym{ZSL}{ZSL}{Zugriffssteuerungsliste}
-\newacronym{CWD}{CWD}{Curent Working Directory}
+\newacronym{CWD}{CWD}{Current Working Directory}
 
 % \bibliography{bibliography}
-
-\makeatletter
-\@ifundefined{MyEnableAnnotations}
-  {%
-    \def\MyEnableAnnotations{false}
-  }
-  {%
-  }
-\makeatother
-\newtoggle{disableAnnotations}
-\ifthenelse{\equal{\MyEnableAnnotations}{false}}{
-  \toggletrue{disableAnnotations}
-}{}
-\nottoggle{disableAnnotations}{
-  \NewDocumentCommand \annotate {m m m}{\pdfmarkupcomment[author=#3]{#1}{#2}}
-  \NewDocumentCommand \remark {m m}{\pdfcomment[author=#2]{#1}}
-  \NewDocumentCommand \inlineremark {m m o}{\pdfmarkupcomment[author=#1,color=yellow]{[#2]}{#3}}
-  \NewDocumentCommand \inlinetodo {m}{\pdfmarkupcomment[color=yellow]{[TODO: #1]}}
-
-  % Use showkeys if annotations are enabled.
-  % Source https://tex.stackexchange.com/a/311421/1280
-  % with minor modifcations, i.e. 1.2 times \marginparwidth
-  % \usepackage{showkeys}
-  % \renewcommand*\showkeyslabelformat[1]{%
-  %   \noexpandarg%
-  %   % instead of \textvisiblespace you can also put in ~
-  %   % if you want to keep a plain space at space characters
-  %   \StrSubstitute{\(\{\)#1\(\}\)}{ }{\textvisiblespace}[\TEMP]%
-  %   \parbox[t]{1.2\marginparwidth}{\raggedright\normalfont\small\ttfamily\expandafter\seqsplit\expandafter{\TEMP}}}
-}{
-  \NewDocumentCommand \annotate {m m m}{}
-  \NewDocumentCommand \remark {m m}{}
-  \NewDocumentCommand \inlineremark {m m o}{}
-  \NewDocumentCommand \inlinetodo {m}{}
-}
-
-\NewDocumentCommand \ifAnnotationsEnabled {m}{\nottoggle{disableAnnotations}{#1}{}}
 
 \usepackage{titling}
 \usepackage{fancyhdr}
@@ -132,7 +97,10 @@ colframe=gray!75!black, enhanced, #1}
 \usepackage[german]{cleveref}
 
 \author{Florian Fischer}
-\title{Arbeitsheft Betriebsysteme}
+\title{Arbeitsheft Betriebssysteme}
+
+\definecolor{bgcolor}{HTML}{330136}
+\definecolor{titlecolor}{HTML}{FF5E35}
 
 \definecolor{inlinecodeboxbackgroundcolor}{HTML}{F8F8F8}
 \definecolor{inlinecodeboxframecolor}{HTML}{DDDDDD}
@@ -161,27 +129,38 @@ colframe=gray!75!black, enhanced, #1}
 
 \begin{document}
 \pagestyle{empty}
+
+\pagecolor{bgcolor}\afterpage{\nopagecolor}
 % \maketitle
 \begin{titlepage}
 \setlength\parindent{0pt}
-\vspace{3cm}
-{\huge \textbf{SOS - Hilfe was ist hier los?}}
+\phantom{o}\\[2.5cm]
+
+\textcolor{titlecolor}
+{\hspace{1cm} \huge \textbf{SOS - Hilfe, was ist hier los?}}
 \vspace{1.5cm}
 
-{\Large \textbf{Anleitung zum School Operating System.}}
+\textcolor{titlecolor}
+{\hspace{1cm} \Large \textbf{Anleitung zum School Operating System.}}
 \vspace{1cm}
+\textcolor{titlecolor}
 \hrule
 \vspace{1cm}
 \begin{centering}
-\includegraphics[keepaspectratio, width=\textwidth]{logo.png}
+\hfill
+\includegraphics[keepaspectratio, width=0.8\textwidth]{logo.png}
+\hfill
 \end{centering}
+\textcolor{titlecolor}
 \hrule
 \vspace{1cm}
-{\large \textbf{Arbeitsheft zum Thema Betriebsysteme}}
+\textcolor{titlecolor}
+{\hspace{1cm} \large \textbf{Arbeitsheft zum Thema Betriebssysteme}}
 
 \end{titlepage}
 
-\newpage
+\newgeometry{margin=2cm}
+
 \pagestyle{fancy}
 \pagenumbering{roman}
 
@@ -192,7 +171,7 @@ colframe=gray!75!black, enhanced, #1}
 \setlength\parindent{0pt}
 \textbf{\large Konzeption des Arbeitshefts}: \\[0.3cm]
 
-Das Arbeitsheft begleitet den Einsatz des \gls{SOS} im Unterricht, das die Grundlagen und Aufgaben von Betriebssystemen nach dem Lehrplan der 12. Jahrgangsstufe mit erhöhtem Anforderungsbereich behandelt. \\[0.2cm]
+Das Arbeitsheft begleitet den Einsatz des \gls{SOS} im Unterricht, das die Grundlagen und Aufgaben von Betriebssystemen nach dem LehrplanPlus der 12. Jahrgangsstufe mit erhöhtem Anforderungsbereich behandelt. \\[0.2cm]
 
 \textbf{\theauthor} \\
 Hans-Sachs-Gymnasium Nürnberg \\
@@ -211,30 +190,30 @@ Dieses Arbeitsheft kann als Begleitung oder als Inspiration in Kombination mit \
 
 \subsection*{\acrfull{SOS}}
 
-Bei \gls{SOS}, handelt es sich um eine Kombination aus einer portable virtuellen Maschine (\href{https://www.qemu.org/}{QEMU}) und dem von der Universität Verona entwickelten und für \gls{SOS} und den Informatikunterricht angepassten Betriebssystem \href{https://mentos-team.github.io/}{MentOS}.
+Bei \gls{SOS} handelt es sich um eine Kombination aus einer portablenn virtuellen Maschine (\href{https://www.qemu.org/}{QEMU}) und dem von der Universität Verona entwickelten und für \gls{SOS} und den Informatikunterricht angepassten Betriebssystem \href{https://mentos-team.github.io/}{MentOS}.
 
 \subsubsection*{Ziele}
 
 Betriebssysteme sind in unserem digitalen Alltag allgegenwärtig.
-Dennoch ist dieser Fakt den meisten Anwenderinnen nicht bewusst, was dafür spricht, dass moderne Betriebssysteme ihrer Aufgabe nachkommen die einfache und sichere Benutzung der unterschiedlichsten Geräte von Smartwatches, über Mobiltelefone zu klassischen PCs reibungslos zu ermöglichen.
+Dennoch ist dieser Fakt den meisten Anwenderinnen nicht bewusst, was dafür spricht, dass moderne Betriebssysteme ihrer Aufgabe nachkommen, die einfache und sichere Benutzung der unterschiedlichsten Geräte von Smartwatches, über Mobiltelefone zu klassischen PCs reibungslos zu ermöglichen.
 
-\gls{SOS} dient dazu die oft schwer erfahrbaren Aufgaben von Betriebssystemen erlebbar zu machen.
+\gls{SOS} dient dazu, die oft schwer erfahrbaren Aufgaben von Betriebssystemen erlebbar zu machen.
 Es werden die wichtigsten und universellen Begriffe im Kontext von Betriebssystemen wiederholt und veranschaulicht.
-Besonderer Fokus liegt dabei auf der Gewährleistung eines sicheren Betrieb, durch die Verwaltung und Durchsetzung von Berechtigungen, im Dateisystem.
+Besonderer Fokus liegt dabei auf der Gewährleistung eines sicheren Betriebs durch die Verwaltung und Durchsetzung von Berechtigungen im Dateisystem.
 
-Außerdem, lädt \href{https://github.com/mentos-team/MentOS}{MentOS} durch seine verhältnismäßigen einfachen Aufbau, sowie die vorhandene \href{https://mentos-team.github.io/doc/doxygen/index.html}{Dokumentation} dazu ein Neues zu entdecken und weiterführendes Interesse zu wecken und in gewissen Umfang auch zu befriedigen.
+Außerdem lädt \href{https://github.com/mentos-team/MentOS}{MentOS} durch seinen verhältnismäßig einfachen Aufbau, sowie die vorhandene \href{https://mentos-team.github.io/doc/doxygen/index.html}{Dokumentation} dazu ein, Neues zu entdecken, weiterführendes Interesse zu wecken und in gewissen Umfang auch zu befriedigen.
 
 \subsubsection*{Benutzung}
 
 \gls{SOS} ist so konzipiert, dass die Benutzung im Unterricht möglichst einfach ist.
 
 \begin{enumerate}
-\item Eine einsatzfähige Version von \gls{SOS} inklusive aller Arbeitsmaterialien kann unter \\ \href{github.com/fischerling/releases}{https://github.com/fischerling/SOS/releases} direkt herunterzuladen werden.
+\item Eine einsatzfähige Version von \gls{SOS} inklusive aller Arbeitsmaterialien kann unter \\ \href{github.com/fischerling/releases}{https://github.com/fischerling/SOS/releases} direkt heruntergeladen werden.
 Die Datei \\ \inlinecode{sos-win.zip} enthält alle benötigten Komponenten zum Einsatz von \gls{SOS}.
 \item Zur Benutzung von \gls{SOS} muss das heruntergeladene Archiv komplett extrahiert werden.
 \item Um das Betriebssystem in der enthaltenen virtuellen Maschine zu starten, reicht es die Datei \inlinecode{run.bat} durch Doppelklick auszuführen.
-Gegebenenfalls muss eines Sicherheitswarnung von Windows, bestätigt werden.
-\item Nachdem MentOS in der virtuellen Maschine gestartet ist, wird der Nutzer nach einem Login, wie in \Cref{fig:login} dargestellt, gefragt.
+Gegebenenfalls muss eine Sicherheitswarnung von Windows, bestätigt werden.
+\item Nachdem MentOS in der virtuellen Maschine gestartet ist, wird die Nutzenden nach einem Login, wie in \Cref{fig:login} dargestellt, gefragt.
 \begin{figure}
 \includegraphics[keepaspectratio, width=\textwidth]{login_prompt.png}
 \caption{Login-Aufforderung von MentOS}
@@ -243,36 +222,41 @@ Gegebenenfalls muss eines Sicherheitswarnung von Windows, bestätigt werden.
 Alle Aufgaben in \gls{SOS} sind für den Benutzer \inlinecode{alice} mit Passwort \inlinecode{alice} ausgelegt.
 \item \label{sec:start_exercise} Übungsaufgaben in \gls{SOS} bestehen meist aus zwei Programmen.
 Ein \inlinecode{setup} Programm bereitet den Zustand des Systems für die Aufgabe vor.
-Das \inlinecode{checkup} Programm dient dazu den Bearbeitungsstand der Aufgabe interaktiv zu überprüfen.
-Die Aufgaben Programme sind im Dateisystem unter \inlinecode{/usr/bin/exercises/} zu finden.
+Das \inlinecode{checkup} Programm dient dazu, den Bearbeitungsstand der Aufgabe interaktiv zu überprüfen.
+Die Aufgabenprogramme sind im Dateisystem unter \inlinecode{/usr/bin/exercises/} zu finden.
 \end{enumerate}
 
 \newpage
 \section{Grundlagen und erste Schritte}
 
 \begin{defbox}{Betriebssystem}
-Das Betriebssystem ist im vereinfachtem Sinn die Software die im privilegierten \textit{kernel modus}, der Hardware ausgeführt wird, siehe \Cref{fig:stack}.
+Das Betriebssystem ist im vereinfachtem Sinn die Software, die im privilegierten \textit{kernel modus} der Hardware ausgeführt wird, siehe \Cref{fig:stack}.
 Dies muss aber nicht immer der Fall sein.
-Grundsätzlich hat das Betriebssystem, die Aufgabe die bestehende Hardware den Nutzerprogrammen in geeigneter Weise zur Verfügung zustellen und deren sichere Verwendung zu gewährleisten.
+Grundsätzlich hat das Betriebssystem die Aufgabe die bestehende Hardware den Nutzerprogrammen in geeigneter Weise zur Verfügung zu stellen und deren sichere Verwendung zu gewährleisten.
 \end{defbox}
 
-\begin{wrapfigure}{r}{8.5cm}
+Der \emph{Kern} des Betriebssystems, das zentrale Programm, das alle notwendigen privilegierten Operationen ausführt, wird englisch \emph{kernel} genannt.
+Man unterscheidet unterschiedliche Arten von \emph{Betriebssystemkernen}, anhand der in ihnen enthaltenen Funktionen und wie ihre Dienste den anderen Schichten angeboten werden.
+\emph{Monolithische kernel}, in denen alle Funktionen des Betriebssystems in einem Programm im privilegierten Modus der Hardware umgesetzt werden, haben sich im Alltag, aus Effizienzgründen durchgesetzt.
+
+\begin{wrapfigure}{r}{8.7cm}
 \input{figures/stack.tikz}
-\caption{Platz des Betriebssystem im Stapel der Technologien.}
+\caption{Platz des Betriebssystems im Stapel der Technologien.}
 \label{fig:stack}
 \end{wrapfigure}
 
-Die Hauptaufgabe des Betriebssystem ist demnach die Verwaltung und Bereitstellung der vorhandenen Hardwareressourcen, wie der Rechenzeit auf den Rechenkernen, den Hauptspeicher, sowie Zugriff auf Peripherie-Geräte wie das Netzwerk, Festplatten oder Ein-/ und Ausgabegeräte.
+Die Hauptaufgabe des Betriebssystems ist demnach die Verwaltung und Bereitstellung der vorhandenen Hardwareressourcen, wie der Rechenzeit auf den Rechenkernen, den Hauptspeicher, sowie Zugriff auf Peripherie-Geräte wie das Netzwerk, Festplatten oder Ein-/ und Ausgabegeräte.
 
 \label{sec:security_safety}
 Dabei muss das Betriebssystem, die Sicherheit der Ressourcen (englisch \emph{security}) gegen bösartige Dritte, andere Nutzer auf dem System, Schadsoftware, Angriffe über die angeschlossenen Peripherie-Geräte, zumeist das Netzwerk, sicherstellen.
 
-Darüber hinaus ist es auch Aufgabe des Betriebssystems die Betriebssicherheit (englisch \emph{safety}) zu gewährleisteten, dass heißt beispielsweise den Verlust von Daten, oder das Abstürzen des Systems bei einem Fehler zu verhindern.
+Darüber hinaus ist es auch Aufgabe des Betriebssystems, die Betriebssicherheit (englisch \emph{safety}) zu gewährleisten, dass heißt, beispielsweise den Verlust von Daten oder das Abstürzen des Systems bei einem Fehler zu verhindern.
+Auch muss der Zugriff auf die Hardware zentral koordiniert werden, um beispielsweise die fehlerhafte gleichzeitige Nutzung der Festplatte durch mehrere Nutzerprogramme zu verhindern.
 
-Um diese Schutzziele zu erfüllen arbeitet das Betriebssystem eng mit der verfügbaren Hardware zusammen.
-Diese erlaubt es beispielsweise durch die Trennung des Ausführung in \textit{user mode} und \textit{kernel mode}, gewisse Operationen auf das Betriebssystem einzuschränken.
+Um diese Schutzziele zu erfüllen, arbeitet das Betriebssystem eng mit der verfügbaren Hardware zusammen.
+Diese erlaubt es beispielsweise durch die Trennung der Ausführung in \textit{user mode} und \textit{kernel mode}, gewisse Operationen auf das Betriebssystem einzuschränken.
 Darüber hinaus sorgt die Hardware nach Instruktion durch das Betriebssystem dafür, dass Programme nur auf ihren eigenen exklusiven Speicherbereich und nicht den anderer Programme zugreifen können.
-Das schützt sowohl das gesamte System vor Fehler in einzelnen Programmen, sowie das einzelne Programm vor dem böswilligen Zugriff Dritter.
+Das schützt sowohl das gesamte System vor Fehlern in einzelnen Programmen, sowie das einzelne Programm vor dem böswilligen Zugriff Dritter.
 
 \begin{aufgbox}{Arbeitsauftrag: Los gehts!}
 \begin{wrapfigure}[11]{r}{8.5cm}
@@ -290,16 +274,20 @@ Um den Umgang mit dem rein textbasierten \gls{SOS} zu üben und einige grundlege
 \end{enumerate}
 \end{aufgbox}
 
-Im Folgenden werden die Konzepte in der Reihenfolge in der sie im Ablauf des \texttt{intro}-Programms auftauchen beschrieben.
+Im Folgenden werden die Konzepte in der Reihenfolge, in der sie im Ablauf des \texttt{intro}-Programms auftauchen, beschrieben.
 
 \subsection{Prozesse}
 
-Eines der fundamentalsten Konzepte eines Betriebssystem ist der Prozess.
+Eines der fundamentalsten Konzepte eines Betriebssystems ist der \emph{Prozess}.
 Ein Prozess repräsentiert ein laufendes Programm.
-Diese Abstraktion erlaubt es mehrere Programme scheinbar gleichzeitig auf nur einem Rechenkern auszuführen.
+Diese Abstraktion erlaubt es, mehrere Programme scheinbar gleichzeitig auf nur einem Rechenkern auszuführen.
 
 \begin{defbox}[breakable]{Prozess}
-\begin{wrapfigure}[11]{r}{4.5cm}
+Ein Prozess besteht aus allen Datenstrukturen, die benötigt werden, um ein Programm auszuführen, beispielsweise einem exklusiven Speicherbereich, sowie dem auszuführenden Programmcode.
+Jeder Prozess hat einen \emph{Zustand}, anhand dessen der Prozess in der Ablaufplanung des Betriebssystems, berücksichtigt wird.
+Wartet ein Prozess auf eine Ressource, wie beispielsweise Daten von der Festplatte, wird er von der Ablaufplanung ausgenommen bis die Ressource verfügbar ist.
+
+\begin{wrapfigure}{r}{4.5cm}
 \vspace{-0.5cm}
 \begin{tikzpicture}
 \begin{class}[text width=4cm]{PROZESS}{0,4}
@@ -315,14 +303,11 @@ Diese Abstraktion erlaubt es mehrere Programme scheinbar gleichzeitig auf nur ei
 \label{fig:proccess_class}
 \end{wrapfigure}
 
-Ein Prozess besteht aus allen Datenstrukturen, die benötigt werden um ein Programm auszuführen, beispielsweise einem exklusiven Speicherbereich, sowie dem auszuführenden Programmcode.
-Jeder Prozess hat einen \emph{Zustand}, anhand dessen der Prozess in der Ablaufplanung des Betriebssystem, berücksichtigt wird.
-Wartet ein Prozess auf Daten von der Festplatte wird er von der Ablaufplanung ausgenommen bis die Daten vorhanden sind.
-
-Um die Sicherheit des Systems zu gewährleisten hat jeder Prozess zugewiesene Berechtigungen, herkömmlich und so auch in \gls{SOS} sind die Berechtigungen mit dem \emph{Besitzer} und der Gruppe des Prozesses verbunden.
+Um die Sicherheit des Systems zu gewährleisten, hat jeder Prozess zugewiesene Berechtigungen, herkömmlich und so auch in \gls{SOS} sind die Berechtigungen mit dem \emph{Besitzer} und der Gruppe des Prozesses verbunden.
+Der \emph{root} Nutzer, mit der \gls{UID} 0 hat in UNIX-ähnlichen Systemen uneingeschränkte Rechte, vergleichbar mit dem \emph{Admin} Nutzer eines Windows System.
 Die \gls{UID} und \gls{GID} eines Prozesses werden beim Erstellen des Prozesses vom \emph{Elternprozess} geerbt.
 Da ein Prozess immer nur von einem anderen Prozess erzeugt werden kann, bilden alle Prozesse des Systems einen Baum.
-Wobei die Wurzel des Baums, der \texttt{init}-Prozess mit \gls{PID} 1 vom Betriebssystem gestartet wird.
+Wobei die Wurzel des Baums, der \texttt{init}-Prozess mit \gls{PID}, 1 vom Betriebssystem gestartet wird.
 \end{defbox}
 
 Die \emph{Kommandozeile} ermöglicht die rein textbasierte Benutzung des Computer, das heißt die Erzeugung und Kontrolle von Prozessen.
@@ -338,12 +323,12 @@ Programme werden anhand ihres Namens in Verzeichnissen, im \texttt{Suchpfad}\\
 \end{wrapfigure}
 
 Das erste Wort der Zeile wird als Name eines Programms interpretiert.
-Es wird ein neuer Prozess gestartet, dieser führt das Programm das anhand des Namens gefunden wurde aus.
+Es wird ein neuer Prozess gestartet, dieser führt das Programm, das anhand des Namens gefunden wurde, aus.
 Der Rest der Zeile wird dem neuen Programm als \emph{Argumente} übergeben.
 
-Jeder Prozess hat ein Verzeichnis zugewiesen in dem er aktuell "arbeitet" und von dem aus alle \hyperref[sec:rel_paths]{relativen Dateipfade} interpretiert werden.
+Jeder Prozess hat ein Verzeichnis zugewiesen, in dem er aktuell "arbeitet" und von dem aus alle \hyperref[sec:rel_paths]{relativen Dateipfade} interpretiert werden.
 Dieses "Arbeitsverzeichnis" wird englisch \gls{CWD} genannt.
-Das \gls{CWD} wird von dem Prozess der den neuen Prozess startet, dem \emph{Elternprozess} geerbt.
+Das \gls{CWD} wird von dem Prozess, der den neuen Prozess startet, dem \emph{Elternprozess} geerbt.
 In der shell kann das \gls{CWD} mit dem Befehl \inlinecode{cd} (englisch \textcolor{red}{c}hange \textcolor{red}{d}irectory) geändert werden.
 
 % Mehrbenutzerbetrieb
@@ -356,8 +341,9 @@ Um Dateien zu strukturieren werden besondere Dateien sogenannte Verzeichnisse (e
 Ähnlich zu Prozessen können Dateien in einem Dateisystem in einer Baumstruktur gruppiert werden (vergleiche \Cref{fig:fs_tree}).
 
 \begin{defbox}[breakable]{Datei}
-\begin{wrapfigure}[8]{r}{4.5cm}
+\begin{wrapfigure}{r}{4.7cm}
 \vspace{-0.5cm}
+\hspace{0.1cm}
 \begin{tikzpicture}
 \begin{class}[text width=4cm]{DATEI}{0,4}
 \attribute{Name}
@@ -372,21 +358,18 @@ Um Dateien zu strukturieren werden besondere Dateien sogenannte Verzeichnisse (e
 \end{wrapfigure}
 Die gängigste Umsetzung von Dateien ist sie als Folge von Bytes bekannter \emph{Größe} zu behandeln.
 Der Inhalt einer Datei hat für das Betriebssystem normalerweise keine Bedeutung und muss von Nutzerprogrammen selbst interpretiert werden.
-Dateien unterscheiden sich zum Speicherbereich eines Prozesses dadurch, dass sie nach der Beendigung des Prozesses weiter existieren und von mehreren Prozessen und sogar nach einem Neustart des Systems verwendet werden kann.
-Um Dateien unterscheiden und wiederverwenden zu können ist jeder Datei ein \emph{Name} zu geordnet.
+Dateien unterscheiden sich zum Speicherbereich eines Prozesses dadurch, dass sie nach der Beendigung des Prozesses weiter existieren und von mehreren Prozessen und sogar nach einem Neustart des Systems verwendet werden können.
+Um Dateien unterscheiden und wiederverwenden zu können, ist jeder Datei ein \emph{Name} zu geordnet.
 Manche Betriebssysteme schränken die erlaubten Zeichen in Dateinamen ein.
 \end{defbox}
 
-% In einem Betriebssystem existieren unterschiedliche Arten von Dateien, wie das Attribut \emph{Typ} in der Klassenkarte in \Cref{fig:file_class} vermuten lässt:
-% \begin{itemize}
-% \item reguläre Dateien, die eine Folge von Byte speichern
-% \item Verzeichnisse, die die Name anderer Dateien, die in diesem Verzeichnis enthalten sind, speichern
-% \item sowie andere \emph{spezielle} Dateien, die beispielsweise die Hardware oder die Ausgaben eines Prozesses als Folge von Bytes zur Verfügung stellen
-% \end{itemize}
+Wie bereits erwähnt, existieren in einem Betriebssystem unterschiedliche Arten von Dateien.
+Neben regulären Dateien, die eine Folge von Bytes speichern und Verzeichnissen, die die Namen anderer Dateien, die in diesem Verzeichnis enthalten sind, speichern, werden auch Hardware Geräte in UNIX-ähnlichen Systemen als Dateien bereitgestellt.
+Das hat den Vorteil, dass die bestehenden Mechanismen der Dateiverwaltung, wie die Zugriffskontrolle, auch auf Hardware Geräte, wie USB-Sticks, angewendet werden können.
 
-Da in einem System mehrere Dateien mit dem gleichen Namen existieren können, wird um eine bestimmte Datei verwenden zu können nicht nur ihr Name sondern auch ihr Ort im Dateisystem benötigt.
+Da in einem System mehrere Dateien mit dem gleichen Namen existieren können, wird um eine bestimmte Datei verwenden zu können, nicht nur ihr Name sondern auch ihr Ort im Dateisystem benötigt.
 
-\begin{wrapfigure}[8]{l}{5.5cm}
+\begin{wrapfigure}[8]{l}{5.4cm}
 \vspace{-0.5cm}
 \begin{expbox}
 \emph{absolut}: \\
@@ -397,15 +380,15 @@ Da in einem System mehrere Dateien mit dem gleichen Namen existieren können, wi
 \end{expbox}
 \end{wrapfigure}
 
-Der Ort einer Datei kann auf zwei Arten angeben werden als \textbf{absoluter} Pfad oder \textbf{relativer} Pfad.
+\noindent Der Ort einer Datei kann auf zwei Arten angeben werden als \textbf{absoluter} Pfad oder \textbf{relativer} Pfad.
 Ein Pfad besteht aus einer beliebigen Liste an Verzeichnissen und einem optionalen abschließenden Dateinamen, getrennt von \emph{Pfadseparatoren}.
-Der Pfadseparator in \gls{SOS} ist wie in allen UNIX-Systemen das Zeichen \inlinecode{\texttt{/}} (in Windows ist der Pfadseparator \inlinecode{\texttt{\textbackslash}}).
+Der Pfadseparator in \gls{SOS} ist wie in allen UNIX-ähnlichen Systemen (beispielsweise Linux oder \mbox{MacOS}) das Zeichen \inlinecode{\texttt{/}}. Windows benutzt das Zeichen \inlinecode{\texttt{\textbackslash}} als Pfadseparator. \\[-0.2cm]
 
 \textbf{Absolute} Pfade beginnen immer mit dem Wurzelverzeichnis des Dateisystems (\inlinecode{\texttt{/}} in \gls{SOS}).
 
 \label{sec:rel_path}\textbf{Relative} Pfade werden ausgehend vom aktuellen Arbeitsverzeichnis \gls{CWD} des Prozesses interpretiert.
 
-Jedes Verzeichnis enthält die beiden besonderen Einträge \inlinecode{.} und \inlinecode{..} die zusätzlich zu Namen in Pfaden vorkommen können.
+Jedes Verzeichnis enthält die beiden besonderen Einträge \inlinecode{.} und \inlinecode{..}, die zusätzlich zu Namen in Pfaden vorkommen können.
 Der besondere Eintrag \inlinecode{.} steht dabei für das Verzeichnis selbst und \inlinecode{..} für das Oberverzeichnis.
 
 \begin{figure}[h]
@@ -426,7 +409,7 @@ Der besondere Eintrag \inlinecode{.} steht dabei für das Verzeichnis selbst und
 
 \section{Datei-Berechtigungen}
 
-Um die beiden \hyperref[sec:security_safety]{Sicherheits-Schutzziele} \emph{security} und \emph{safety} zu gewährleisten haben Dateien einen \emph{Besitzer} und eine feste Zuweisung an \emph{Berechtigungen}.
+Um die beiden \hyperref[sec:security_safety]{Sicherheits-Schutzziele} \emph{security} und \emph{safety} zu gewährleisten, haben Dateien einen \emph{Besitzer} und eine feste Zuweisung an \emph{Berechtigungen}.
 Diese Berechtigungen werden bei der Verwendung einer Datei überprüft und die Operation gegebenenfalls vom Betriebssystem abgelehnt.
 
 \begin{defbox}{Datei-Berechtigungen}
@@ -436,26 +419,25 @@ Diese Berechtigungen werden bei der Verwendung einer Datei überprüft und die O
 \label{fig:filePermissions}
 \end{wrapfigure}
 
-Eine sehr rudimentäre, aber dennoch in UNIX-ähnlichen System, wie Linux, weit verbreitete, Art die Berechtigungen einer Datei zu verwalten, ist diese in \underline{neun Bit} zu speichern.
-Diese Bits werden, wie \Cref{fig:filePermissions} dargestellt, in drei Klassen a drei Bits aufgeteilt.
+Eine sehr rudimentäre, aber dennoch in UNIX-ähnlichen System weit verbreitete Art, die Berechtigungen einer Datei zu verwalten, ist diese in \underline{neun} Bit zu speichern.
+Diese Bits werden, wie \Cref{fig:filePermissions} dargestellt, in drei Klassen á drei Bits aufgeteilt.
 Die Klassen stehen für den Besitzer der Datei, die Gruppenkennung der Datei, sowie alle anderen.
 
 Das erste Bit (\boldred{r}ead) innerhalb einer Klasse gibt an, ob die Datei gelesen werden darf.
 Das zweite Bit (\boldred{w}rite) regelt, ob die Datei geschrieben werden darf.
 Das dritte Bit (e\boldred{x}ute) steuert, ob die Datei in einem Prozess ausgeführt werden darf, oder falls es sich um ein Verzeichnis handelt, ob auf andere Dateien innerhalb des Verzeichnisses zugegriffen werden darf.
 
-Vor der Verwendung einer Datei wird zunächst, die Klasse des Prozesses, der die Datei verwenden möchte bestimmt und anhand derer geprüft, ob die Operation erlaubt ist.
+Vor der Verwendung einer Datei wird zunächst die Klasse des Prozesses, der die Datei verwenden möchte, bestimmt und anhand derer geprüft, ob die Operation erlaubt ist.
 \end{defbox}
 
 Neben den neun grundlegenden Bits für die drei Klassen existieren noch drei zusätzliche Bits für erweiterte Dateiberechtigungen.
-Bei dem ersten Bit handelt es sich um das sogenannte "\emph{sticky bit}", das bei von Allen schreibbaren Verzeichnissen, das Löschen verhindert.
-Die zwei verbleibenden Bits werden "\emph{SUID}" (\textcolor{red}{S}et \textcolor{red}{UID}) bzw. "\emph{SGID}" (\textcolor{red}{S}et \textcolor{red}{GID}) genannt.
-Ist eines dieser Bits gesetzt wird ein Programm mit dem Besitzer bzw. der Gruppe der Programm-Datei statt des Elternprozesses ausgeführt.
-Dies wird verwendet um beispielsweise Nutzern kontrollierten Zugriff auf den \emph{root}-Nutzer mit UID 0 zu gewähren.
+Bei dem ersten Bit handelt es sich um das sogenannte "\emph{sticky bit}", das bei von allen schreibbaren Verzeichnissen, das Löschen verhindert.
+Die zwei verbleibenden Bits werden "\emph{SUID}" (\textcolor{red}{S}et \textcolor{red}{UID}) beziehungsweise "\emph{SGID}" (\textcolor{red}{S}et \textcolor{red}{GID}) genannt.
+Ist eines dieser Bits gesetzt, wird das Programm mit dem Besitzer beziehungsweise der Gruppe der Programm-Datei statt des Elternprozesses ausgeführt.
+Dies wird verwendet, um beispielsweise Nutzern kontrollierten Zugriff auf den \emph{root}-Nutzer mit UID 0 zu gewähren.
+Das in \gls{SOS} enthaltene \emph{SUID}-Programm \inlinecode{doas} prüft anhand einer Konfigurationsdatei, ob der aktuelle Benutzer die Berechtigung hat, Befehle als \emph{root}-Nutzer auszuführen, und führt gegebenenfalls den als Argumente übergebenen Befehl mit \gls{UID} 0 aus.
 
-Das in \gls{SOS} enthaltene Programm \inlinecode{doas} prüft anhand einer Konfigurationsdatei, ob der aktuelle Benutzer die Berechtigung hat Befehle als \emph{root}-Nutzer auszuführen, und führt gegebenenfalls den als Argumente übergebenen Befehl mit \gls{UID} 0 aus.
-
-Modernen Dateisysteme unterstützen darüber hinaus, eine feingranularer Steuerung der Berechtigungen auf Basis einer \gls{ZSL}.
+Moderne Dateisysteme unterstützen darüber hinaus, eine spezifischere Steuerung der Berechtigungen auf Basis einer \gls{ZSL}.
 
 \begin{aufgbox}{Arbeitsauftrag: Berechtigungsbits}
 Gängige Berechtigungen für Verzeichnisse sind die Bits \texttt{0755}.
@@ -463,7 +445,7 @@ Wandeln Sie die Bits aus der Oktalschreibweise in ihre symbolische Darstellung u
 
 \kariert{6}
 
-Untersuchen sie die Berechtigungen der folgenden Dateien:
+Untersuchen Sie die Berechtigungen der folgenden Dateien:
 
 \begin{tabular}{p{0.233\textwidth} p{0.7\textwidth}}
 \begin{enumerate}
@@ -482,23 +464,23 @@ Untersuchen sie die Berechtigungen der folgenden Dateien:
 \clearpage
 \subsection{Kartographie der Beispiellandschaft}
 \gls{SOS} enthält eine Verzeichnisstruktur, in der die Bedeutung der Berechtigungen von Dateien und Verzeichnissen an Beispielen aus der analogen Welt verdeutlicht werden.
-Diese wird beim \hyperref[sec:start_exercise]{Start} der \texttt{file-permission}-Aufgaben durch ausführen des Programms \inlinecode{/usr/bin/exercises/file-permissions/setup} angelegt.
+Diese wird beim \hyperref[sec:start_exercise]{Start} der \texttt{file-permission} Aufgaben durch Ausführen des Programms \inlinecode{/usr/bin/exercises/file-permissions/setup} angelegt.
 
 \begin{aufgbox}{Arbeitsauftrag: Kartographie der Beispiellandschaft}
 Erkunden Sie die Verzeichnisstruktur unter \inlinecode{/home/alice/Landschaft}. 
-Zeichnen Sie die Beispiellandschaft als Baumdiagramm (vgl. \Cref{fig:fs_tree}).
-Stellen Sie Vermutungen darüber an warum zu einem Beispiel die bestehenden Berechtigungen passen.
+Zeichnen Sie die Beispiellandschaft als Baumdiagramm (vergleiche \Cref{fig:fs_tree}).
+Stellen Sie Vermutungen darüber an, warum zu einem Beispiel die bestehenden Berechtigungen passen.
 Hilfreiche Programme: \inlinecode{ls}, \inlinecode{stat}, \inlinecode{cd}.
 \vspace{0.2cm}
 \kariert{32}
 \end{aufgbox}
 
 \subsection{Kartographie des Dateisystems}
-Die Verzeichnisstruktur von \gls{SOS}, die sich am \href{https://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.html}{File Hierarchy Standard} für UNIX-ähnlichen Systems orientiert, enthält ganz bestimmte Berechtigungen für gewissen Teilbäume und Dateien.
+Die Verzeichnisstruktur von \gls{SOS}, die sich am \href{https://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.html}{File Hierarchy Standard} für UNIX-ähnliche Systeme orientiert, enthält ganz bestimmte Berechtigungen für gewisse Teilbäume und Dateien.
 
 \begin{aufgbox}{Arbeitsauftrag: Kartographie des Dateisystems}
 Erstellen Sie ein Baumdiagramm des Dateisystems von \gls{SOS}.
-Färben Sie die Teilbäume entsprechend ihres Besitzers ein und achte Sie dabei auch auf Ausreißer die von den anderen Berechtigungen abweichen und stellen Sie Vermutung an warum dies jeweils der Fall ist.
+Färben Sie die Teilbäume entsprechend ihres Besitzers ein und achten Sie dabei auch auf Ausreißer, die von den anderen Berechtigungen abweichen und stellen Sie Vermutungen an, warum dies jeweils der Fall ist.
 \vspace{0.2cm}
 \kariert{36}
 \end{aufgbox}
@@ -506,20 +488,20 @@ Färben Sie die Teilbäume entsprechend ihres Besitzers ein und achte Sie dabei 
 \subsection{Herausforderung: Geheimnisse}
 
 Oft sind nicht akkurat gepflegte Berechtigungen Ursache für Sicherheitsprobleme.
-Erlauben sie es zum Beispiel unbefugten sensible Informationen zu lesen oder in schlimmsten Fall beliebigen Code auszuführen.
+Diese erlauben es zum Beispiel Unbefugten sensible Informationen zu lesen oder in schlimmsten Fall beliebigen Code auszuführen.
 \gls{SOS} enthält eine kleine Herausforderung, bei der die Geheimnisse des Nutzers \inlinecode{alice} geschützt und die Geheimnisse des Nutzers \inlinecode{bob} herausbekommen werden müssen.
 
 \begin{aufgbox}{Arbeitsauftrag: Geheimnisse}
-Nachdem Start der \texttt{file-permission}-Aufgabe durch Ausführen des Programms \inlinecode{/usr/bin/exercises/file-permissions/setup} enthält das Verzeichnis \inlinecode{/home/alice} die Datei \inlinecode{secrets.txt}, die es zu schützen gilt.
-Das Verzeichnis \inlinecode{/home/bob} enthält die Dateien \inlinecode{secrets.txt} und \inlinecode{top\_secret.txt} der Inhalt nötig ist um die Fragen des Programms \inlinecode{/usr/bin/exercises/file-permissions/checkup} erfolgreich zu beantworten.
-Reflektieren Sie, die Art und Weise wie sie an die Informationen gelangt sind und ob diese verhindert werden können.
+Nach dem Start der \texttt{file-permission} Aufgabe durch Ausführen des Programms \inlinecode{/usr/bin/exercises/file-permissions/setup} enthält das Verzeichnis \inlinecode{/home/alice} die Datei \inlinecode{secrets.txt}, die es zu schützen gilt.
+Das Verzeichnis \inlinecode{/home/bob} enthält die Dateien \inlinecode{secrets.txt} und \inlinecode{top\_secret.txt}, deren Inhalt nötig ist, um die Fragen des Programms \inlinecode{/usr/bin/exercises/file-permissions/checkup} erfolgreich zu beantworten.
+Reflektieren Sie die Art und Weise, wie Sie an die Informationen gelangt sind und ob, dies verhindert werden kann.
 \vspace{0.2cm}
 
 Happy Hacking :)
 \vspace{0.2cm}
 
 Dem Autor sind drei Möglichkeiten bekannt, den Inhalt der Datei \inlinecode{top\_secret.txt} zu erfahren.
-Der ersten Person die alle drei, oder potenziell noch weitere Möglichkeiten findet und diese unter \href{mailto://sos@muhq.space}{sos@muhq.space} erklärt, verspricht der Autor hiermit ein heiß Getränk ihrer Wahl.
+Der ersten Person die alle drei, oder potenziell noch weitere Möglichkeiten findet und diese unter \href{mailto://sos@muhq.space}{sos@muhq.space} erklärt, verspricht der Autor hiermit ein Heißgetränk Ihrer Wahl.
 \end{aufgbox}
 
 \printnoidxglossary[type=acronym]
