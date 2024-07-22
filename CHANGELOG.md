@@ -1,2 +1,3 @@
-# v0.2.3
+# v0.2.4
+* fix workbook language
 * improve example landscape
