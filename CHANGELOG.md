@@ -1,3 +1,5 @@
-# v0.2.4
-* fix workbook language
-* improve example landscape
+# v0.2.5
+* improve worbook layout
+* bump MentOS
+  * improve intro
+  * still print file-permission exercise when landscape already exists
