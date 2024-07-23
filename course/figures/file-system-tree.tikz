@@ -1,0 +1,19 @@
+\begin{tikzpicture}[
+  dir/.style={align=left, draw, minimum size = 2cm},
+  file/.style={align=left, draw, rounded corners=10pt, minimum size=2cm}
+]
+\node[dir] (r) {/ \\ root:root \\ \texttt{\textcolor{red}{d}rwxr-xr-x}};
+
+\node[right=of r, dir] (d1) {$verzeichnis_1$ \\ owner:group \\ \texttt{\textcolor{red}{d}rwxr-xr-x}};
+\draw[magenta, thick] (r) -- (d1);
+
+\node[right=of d1, file] (f1) {$datei_1$ \\ owner:group \\ \texttt{rw-r-{}-r-{}-}};
+\draw[magenta, thick] (d1) -- (f1);
+
+\node[below=of f1, dir] (d2) {$verzeichnis_2$ \\ owner:group \\ \texttt{\textcolor{red}{d}rwx-{}-{}-{}-{}-{}-}};
+\draw (d1) -- (d2);
+
+\node[right=of d2, file] (f2) {$datei_2$ \\ owner:group \\ \texttt{rw-r-{}-{}-{}-{}-}};
+\draw (d2) -- (f2);
+
+\end{tikzpicture}
