@@ -396,17 +396,8 @@ Der besondere Eintrag \inlinecode{.} steht dabei für das Verzeichnis selbst und
 
 \begin{figure}[h]
 \centering
-\begin{tikzpicture}[
-  dir/.style={align=left, draw, minimum size = 2cm},
-  file/.style={align=left, draw, rounded corners=10pt, minimum size=2cm}
-]
-\node[dir] (r) {/ \\ root:root \\ \texttt{\textcolor{red}{d}rwxr-xr-x}};
-\node[right=of r, dir] (d) {$verzeichnis_1$ \\ owner:group \\ \texttt{\textcolor{red}{d}rwxr-xr-x}};
-\draw (r) -- (d);
-\node[right=of d, file] (f) {$datei_1$ \\ owner:group \\ \texttt{rw-r-{}-r-{}-}};
-\draw (f) -- (d);
-\end{tikzpicture}
-\caption{Darstellung der Baumstruktur eines Dateisystems ausgehend vom Wurzelverzeichnis~\protect\inlinecode{/}. Ob es sich bei einer Datei um ein  Verzeichnis handelt, wird in der Darstellung der Berechtigungen mit einem vorangestellten \textcolor{red}{d} symbolisiert. Der absolute Pfad von $datei_1$ lautet \protect\inlinecode{/$verzeichnis_1$/$datei_1$}.}
+\input{figures/file-system-tree.tikz}
+\caption{Darstellung der Baumstruktur eines Dateisystems ausgehend vom Wurzelverzeichnis~\protect\inlinecode{/}. Ob es sich bei einer Datei um ein  Verzeichnis handelt, wird in der Darstellung der Berechtigungen mit einem vorangestellten \textcolor{red}{d} symbolisiert. Der \textcolor{magenta}{absolute Pfad} zu $datei_1$ lautet \protect\inlinecode{/$verzeichnis_1$/$datei_1$}.}
 \label{fig:fs_tree}
 \end{figure}
 
