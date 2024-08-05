@@ -233,7 +233,7 @@ Außerdem kann der potentiell gefangene Mauszeiger in QEMU durch Drücken von \i
 \section{Grundlagen und erste Schritte}
 
 \begin{defbox}{Betriebssystem}
-Das Betriebssystem ist im vereinfachtem Sinn die Software, die im privilegierten \textit{kernel modus} der Hardware ausgeführt wird, siehe \Cref{fig:stack}.
+Das Betriebssystem ist im vereinfachtem Sinn die Software, die im privilegierten \textit{Kernelmodus} der Hardware ausgeführt wird, siehe \Cref{fig:stack}.
 Dies muss aber nicht immer der Fall sein.
 Grundsätzlich hat das Betriebssystem die Aufgabe die bestehende Hardware den Nutzerprogrammen in geeigneter Weise zur Verfügung zu stellen und deren sichere Verwendung zu gewährleisten.
 \end{defbox}
@@ -257,7 +257,7 @@ Darüber hinaus ist es auch Aufgabe des Betriebssystems, die Betriebssicherheit 
 Auch muss der Zugriff auf die Hardware zentral koordiniert werden, um beispielsweise die fehlerhafte gleichzeitige Nutzung der Festplatte durch mehrere Nutzerprogramme zu verhindern.
 
 Um diese Schutzziele zu erfüllen, arbeitet das Betriebssystem eng mit der verfügbaren Hardware zusammen.
-Diese erlaubt es beispielsweise durch die Trennung der Ausführung in \textit{user mode} und \textit{kernel mode}, gewisse Operationen auf das Betriebssystem einzuschränken.
+Diese erlaubt es beispielsweise durch die Trennung der Ausführung in \textit{Benutzermodus} und \textit{Kernelmodus}, gewisse Operationen auf das Betriebssystem einzuschränken.
 Darüber hinaus sorgt die Hardware nach Instruktion durch das Betriebssystem dafür, dass Programme nur auf ihren eigenen exklusiven Speicherbereich und nicht den anderer Programme zugreifen können.
 Das schützt sowohl das gesamte System vor Fehlern in einzelnen Programmen, sowie das einzelne Programm vor dem böswilligen Zugriff Dritter.
 
