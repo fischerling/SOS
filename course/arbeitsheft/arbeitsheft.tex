@@ -256,7 +256,7 @@ Dabei muss das Betriebssystem, die Sicherheit der Ressourcen (englisch \emph{sec
 Darüber hinaus ist es auch Aufgabe des Betriebssystems, die Betriebssicherheit (englisch \emph{safety}) zu gewährleisten, dass heißt, beispielsweise den Verlust von Daten oder das Abstürzen des Systems bei einem Fehler zu verhindern.
 Auch muss der Zugriff auf die Hardware zentral koordiniert werden, um beispielsweise die fehlerhafte gleichzeitige Nutzung der Festplatte durch mehrere Nutzerprogramme zu verhindern.
 
-Um diese Schutzziele zu erfüllen, arbeitet das Betriebssystem eng mit der verfügbaren Hardware zusammen.
+Um diese Schutzziele zu erfüllen, arbeitet das Betriebssystem eng mit der verwendeten Hardware zusammen.
 Diese erlaubt es beispielsweise durch die Trennung der Ausführung in \textit{Benutzermodus} und \textit{Kernelmodus}, gewisse Operationen auf das Betriebssystem einzuschränken.
 Darüber hinaus sorgt die Hardware nach Instruktion durch das Betriebssystem dafür, dass Programme nur auf ihren eigenen exklusiven Speicherbereich und nicht den anderer Programme zugreifen können.
 Das schützt sowohl das gesamte System vor Fehlern in einzelnen Programmen, sowie das einzelne Programm vor dem böswilligen Zugriff Dritter.
@@ -287,7 +287,7 @@ Diese Abstraktion erlaubt es, mehrere Programme scheinbar gleichzeitig auf nur e
 
 \begin{defbox}[breakable]{Prozess}
 Ein Prozess besteht aus allen Datenstrukturen, die benötigt werden, um ein Programm auszuführen, beispielsweise einem exklusiven Speicherbereich, sowie dem auszuführenden Programmcode.
-Jeder Prozess hat einen \emph{Zustand}, anhand dessen der Prozess in der Ablaufplanung des Betriebssystems, berücksichtigt wird.
+Jeder Prozess hat einen \emph{Zustand}, anhand dessen er in der Ablaufplanung des Betriebssystems, berücksichtigt wird.
 Wartet ein Prozess auf eine Ressource, wie beispielsweise Daten von der Festplatte, wird er von der Ablaufplanung ausgenommen bis die Ressource verfügbar ist.
 
 \begin{wrapfigure}{r}{4.5cm}
@@ -310,7 +310,7 @@ Um die Sicherheit des Systems zu gewährleisten, hat jeder Prozess zugewiesene B
 Der \emph{root} Nutzer, mit der \gls{UID} 0 hat in UNIX-ähnlichen Systemen uneingeschränkte Rechte, vergleichbar mit dem \emph{Admin} Nutzer eines Windows System.
 Die \gls{UID} und \gls{GID} eines Prozesses werden beim Erstellen des Prozesses vom \emph{Elternprozess} geerbt.
 Da ein Prozess immer nur von einem anderen Prozess erzeugt werden kann, bilden alle Prozesse des Systems einen Baum.
-Wobei die Wurzel des Baums, der \texttt{init}-Prozess mit \gls{PID}, 1 vom Betriebssystem gestartet wird.
+Wobei die Wurzel des Baums, der \texttt{init}-Prozess mit \gls{PID} 1 vom Betriebssystem gestartet wird.
 \end{defbox}
 
 Die \emph{Kommandozeile} ermöglicht die rein textbasierte Benutzung des Computer, das heißt die Erzeugung und Kontrolle von Prozessen.
