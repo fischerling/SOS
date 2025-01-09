@@ -1,2 +1,2 @@
-# v0.2.9
-* Rebase MentOS fork on v0.7.2
+# v0.2.10
+* slighlty improve the languauge in the work book

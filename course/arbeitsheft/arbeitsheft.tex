@@ -213,7 +213,7 @@ Die Datei \\ \inlinecode{sos-win.zip} enthält alle benötigten Komponenten zum 
 \item Zur Benutzung von \gls{SOS} muss das heruntergeladene Archiv komplett extrahiert werden.
 \item Um das Betriebssystem in der enthaltenen virtuellen Maschine zu starten, reicht es die Datei \inlinecode{run.bat} durch Doppelklick auszuführen.
 Gegebenenfalls muss eine Sicherheitswarnung von Windows, bestätigt werden.
-\item Nachdem MentOS in der virtuellen Maschine gestartet ist, wird die Nutzenden nach einem Login, wie in \Cref{fig:login} dargestellt, gefragt.
+\item Nachdem MentOS in der virtuellen Maschine gestartet ist, werden die Nutzenden nach einem Login, wie in \Cref{fig:login} dargestellt, gefragt.
 \begin{figure}
 \includegraphics[keepaspectratio, width=\textwidth]{login_prompt.png}
 \caption{Login-Aufforderung von MentOS}
@@ -226,7 +226,7 @@ Alle Aufgaben in \gls{SOS} sind für den Benutzer \inlinecode{alice} mit Passwor
 % Die Aufgabenprogramme sind im Dateisystem unter \inlinecode{/usr/bin/exercises/} zu finden.
 \end{enumerate}
 
-\textbf{Tipp}: Um \gls{SOS} leichter benutzen zu können, bietet es sich an die Schriftgröße in QEMU unter \emph{View} zu vergrößern.
+\textbf{Tipp}: Um \gls{SOS} leichter benutzen zu können, bietet es sich an, die Schriftgröße in QEMU unter \emph{View} zu vergrößern.
 Außerdem kann der potentiell gefangene Mauszeiger in QEMU durch Drücken von \inlinecode{Strg + Alt + G} wieder befreit werden.
 
 \newpage
@@ -235,7 +235,7 @@ Außerdem kann der potentiell gefangene Mauszeiger in QEMU durch Drücken von \i
 \begin{defbox}{Betriebssystem}
 Das Betriebssystem ist im vereinfachtem Sinn die Software, die im privilegierten \textit{Kernelmodus} der Hardware ausgeführt wird, siehe \Cref{fig:stack}.
 Dies muss aber nicht immer der Fall sein.
-Grundsätzlich hat das Betriebssystem die Aufgabe die bestehende Hardware den Nutzerprogrammen in geeigneter Weise zur Verfügung zu stellen und deren sichere Verwendung zu gewährleisten.
+Grundsätzlich hat das Betriebssystem die Aufgabe, die bestehende Hardware den Nutzerprogrammen in geeigneter Weise zur Verfügung zu stellen und deren sichere Verwendung zu gewährleisten.
 \end{defbox}
 
 Der \emph{Kern} des Betriebssystems, das zentrale Programm, das alle notwendigen privilegierten Operationen ausführt, wird englisch \emph{kernel} genannt.
@@ -251,7 +251,7 @@ Man unterscheidet unterschiedliche Arten von \emph{Betriebssystemkernen} anhand 
 Die Hauptaufgabe des Betriebssystems ist demnach die Verwaltung und Bereitstellung der vorhandenen Hardwareressourcen, wie der Rechenzeit auf den Rechenkernen, den Hauptspeicher, sowie Zugriff auf Peripherie-Geräte wie das Netzwerk, Festplatten oder Ein-/ und Ausgabegeräte.
 
 \label{sec:security_safety}
-Dabei muss das Betriebssystem, die Sicherheit der Ressourcen (englisch \emph{security}) gegen bösartige Dritte, andere Nutzer auf dem System, Schadsoftware, Angriffe über die angeschlossenen Peripherie-Geräte, zumeist das Netzwerk, sicherstellen.
+Dabei muss das Betriebssystem, die Sicherheit der Ressourcen (englisch \emph{security}) gegen bösartige Dritte, andere Nutzer auf dem System, Schadsoftware oder Angriffe über die angeschlossenen Peripherie-Geräte, zumeist das Netzwerk, sicherstellen.
 
 Darüber hinaus ist es auch Aufgabe des Betriebssystems, die Betriebssicherheit (englisch \emph{safety}) zu gewährleisten, das heißt, beispielsweise den Verlust von Daten oder das Abstürzen des Systems bei einem Fehler zu verhindern.
 Auch muss der Zugriff auf die Hardware zentral koordiniert werden, um beispielsweise die fehlerhafte gleichzeitige Nutzung der Festplatte durch mehrere Nutzerprogramme zu verhindern.
@@ -272,7 +272,7 @@ Das schützt sowohl das gesamte System vor Fehlern in einzelnen Programmen, sowi
 Um den Umgang mit dem rein textbasierten \gls{SOS} zu üben und einige grundlegende Konzepte aus der Welt der Betriebssysteme zu erkunden, stellt \gls{SOS} ein \inlinecode{intro} Programm zur Verfügung.
 \begin{enumerate}
 \item Starten Sie, falls noch nicht geschehen, \gls{SOS} durch Ausführen der Datei \inlinecode{run.bat}.
-\item Melden Sie sich als der Benutzer \inlinecode{alice} mit dem Passwort \inlinecode{Alice} an.
+\item Melden Sie sich als der Benutzer \inlinecode{alice} mit dem Passwort \inlinecode{alice} an.
 \item Starten Sie nach einer erfolgreichen Anmeldung, wie in \Cref{fig:intro_start} gezeigt, das \inlinecode{intro} Programm durch Eintippen des Namens und Drücken der Enter-Taste. 
 \end{enumerate}
 \end{aufgbox}
@@ -340,7 +340,7 @@ In der shell kann das \gls{CWD} mit dem Befehl \inlinecode{cd} (englisch \textco
 
 Ein weiteres essentielles Konzept nahezu aller Betriebssysteme ist die \emph{Datei}.
 Um die Eigenheiten verschiedener persistenter Speichermedien, von Festplatten, über USB-Sticks bis hin zu Magnetbändern, zu verstecken, bieten Betriebssysteme das Konzept von Dateien an.
-Um Dateien zu strukturieren werden besondere Dateien sogenannte Verzeichnisse (englisch \emph{directory}) verwendet.
+Um Dateien zu strukturieren werden besondere Dateien, sogenannte Verzeichnisse (englisch \emph{directory}) verwendet.
 Ähnlich zu Prozessen können Dateien in einem Dateisystem in einer Baumstruktur gruppiert werden (vergleiche \Cref{fig:fs_tree}).
 
 \begin{defbox}[breakable]{Datei}
@@ -425,7 +425,7 @@ Vor der Verwendung einer Datei wird zunächst die Klasse des Prozesses, der die 
 \end{defbox}
 
 Neben den neun grundlegenden Bits für die drei Klassen existieren noch drei zusätzliche Bits für erweiterte Dateiberechtigungen.
-Bei dem ersten Bit handelt es sich um das sogenannte "\emph{sticky bit}", das bei von allen schreibbaren Verzeichnissen, das Löschen verhindert.
+Bei dem ersten Bit handelt es sich um das sogenannte "\emph{sticky bit}", das bei allen schreibbaren Verzeichnissen das Löschen verhindert.
 Die zwei verbleibenden Bits werden "\emph{SUID}" (\textcolor{red}{S}et \textcolor{red}{UID}) beziehungsweise "\emph{SGID}" (\textcolor{red}{S}et \textcolor{red}{GID}) genannt.
 Ist eines dieser Bits gesetzt, wird das Programm mit dem Besitzer beziehungsweise der Gruppe der Programm-Datei statt des Elternprozesses ausgeführt.
 Dies wird verwendet, um beispielsweise Nutzern kontrollierten Zugriff auf den \emph{root}-Nutzer mit UID 0 zu gewähren.
@@ -463,7 +463,7 @@ Diese wird beim \hyperref[sec:start_exercise]{Start} der \texttt{file-permission
 \begin{aufgbox}{Arbeitsauftrag: Kartographie der Beispiellandschaft}
 Erkunden Sie die Verzeichnisstruktur unter \inlinecode{/home/alice/Landschaft}. 
 Zeichnen Sie die Beispiellandschaft als Baumdiagramm (vergleiche \Cref{fig:fs_tree}).
-Stellen Sie Vermutungen darüber an, warum zu einem Beispiel die bestehenden Berechtigungen passen.
+Stellen Sie Vermutungen darüber an, warum die bestehenden Berechtigungen zu den Beispielen passen.
 Hilfreiche Programme: \inlinecode{ls}, \inlinecode{stat}, \inlinecode{cd}.
 \vspace{0.2cm}\phantom{a}
 \kariert{34}
@@ -483,7 +483,7 @@ Färben Sie die Teilbäume entsprechend ihres Besitzers ein und achten Sie dabei
 \subsection{Herausforderung: Geheimnisse}
 
 Oft sind nicht akkurat gepflegte Berechtigungen Ursache für Sicherheitsprobleme.
-Diese erlauben es zum Beispiel Unbefugten sensible Informationen zu lesen oder in schlimmsten Fall beliebigen Code auszuführen.
+Diese erlauben es zum Beispiel Unbefugten sensible Informationen zu lesen oder im schlimmsten Fall beliebigen Code auszuführen.
 \gls{SOS} enthält eine kleine Herausforderung, bei der die Geheimnisse des Nutzers \inlinecode{alice} geschützt und die Geheimnisse des Nutzers \inlinecode{bob} herausbekommen werden müssen.
 
 \begin{aufgbox}{Arbeitsauftrag: Geheimnisse}
